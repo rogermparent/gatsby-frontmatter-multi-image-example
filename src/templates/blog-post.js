@@ -5,6 +5,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
+import Image from "gatsby-image"
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -28,6 +29,14 @@ class BlogPostTemplate extends React.Component {
             >
               {post.frontmatter.title}
             </h1>
+            <div>
+              <h2>Images</h2>
+              {post.frontmatter.images.map(
+                ({fluid}) => (
+                  <Image fluid={fluid} />
+                )
+              )}
+            </div>
             <p
               style={{
                 ...scale(-1 / 5),
@@ -97,6 +106,11 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        images {
+          fluid{
+            ...GatsbyImageSharpFluid
+          }
+        }
       }
     }
   }
